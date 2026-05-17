@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VA Directory — Hire a VA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --magenta: #C4006A; --magenta-light: #f0d6e8; --magenta-dark: #8a0049;
+    --navy: #1B1F3B; --cream: #FDF8F4; --warm-white: #FFFCFA;
+    --text-body: #3a3a3a; --text-muted: #7a7068;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-body); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; background: rgba(253,248,244,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(196,0,106,0.1); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--magenta); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+  .nav-back:hover { color: var(--navy); }
+  .nav-cta { background: var(--magenta); color: #fff; text-decoration: none; font-size: 13px; font-weight: 500; padding: 10px 22px; border-radius: 100px; }
+  .nav-cta:hover { background: var(--magenta-dark); }
+
+  .page-header { padding: 120px 40px 48px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px; }
+  .header-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--magenta); margin-bottom: 14px; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; color: var(--navy); margin-bottom: 16px; }
+  .header-title em { font-style: italic; color: var(--magenta); }
+  .header-sub { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--text-muted); max-width: 480px; }
+  .header-stat { text-align: right; flex-shrink: 0; }
+  .header-stat-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 900; color: var(--navy); line-height: 1; }
+  .header-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  .filters-bar { padding: 0 40px 40px; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .filter-label { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; flex-shrink: 0; }
+  .filter-btn { background: var(--warm-white); border: 1px solid rgba(27,31,59,0.12); border-radius: 100px; padding: 7px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .filter-btn:hover { border-color: var(--magenta); color: var(--navy); }
+  .filter-btn.active { background: var(--magenta); border-color: var(--magenta); color: #fff; font-weight: 500; }
+
+  .divider { max-width: 1200px; margin: 0 auto 48px; padding: 0 40px; border: none; border-top: 1px solid rgba(27,31,59,0.08); }
+  .directory-grid { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+
+  .va-card { background: var(--warm-white); border: 1px solid rgba(27,31,59,0.08); border-radius: 20px; padding: 28px; transition: transform 0.25s, box-shadow 0.25s; display: flex; flex-direction: column; }
+  .va-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(27,31,59,0.1); }
+  .va-card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .va-initials { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; flex-shrink: 0; }
+  .va-info { flex: 1; min-width: 0; }
+  .va-name { font-size: 16px; font-weight: 500; color: var(--navy); margin-bottom: 2px; }
+  .va-business { font-size: 12px; color: var(--magenta); margin-bottom: 3px; font-weight: 500; }
+  .va-location { font-size: 12px; color: var(--text-muted); }
+  .va-category { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--magenta-dark); background: var(--magenta-light); padding: 4px 10px; border-radius: 100px; margin-bottom: 12px; }
+  .va-bio { font-size: 13px; font-weight: 300; line-height: 1.65; color: var(--text-muted); margin-bottom: 12px; flex: 1; }
+  .va-quote { font-size: 13px; font-style: italic; color: var(--navy); border-left: 2px solid var(--magenta-light); padding-left: 12px; margin-bottom: 12px; line-height: 1.5; }
+  .va-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+  .skill-tag { font-size: 11px; padding: 3px 9px; border-radius: 100px; background: var(--cream); color: var(--text-muted); border: 0.5px solid rgba(27,31,59,0.1); }
+  .va-links { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .va-link { font-size: 11px; color: var(--magenta); text-decoration: none; }
+  .va-link:hover { color: var(--magenta-dark); text-decoration: underline; }
+  .va-meta { padding-top: 12px; border-top: 0.5px solid rgba(27,31,59,0.08); margin-bottom: 16px; }
+  .va-meta-item { font-size: 11px; color: var(--text-muted); }
+  .va-meta-item strong { color: var(--navy); font-weight: 500; font-size: 12px; }
+  .contact-btn { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 100px; padding: 12px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .contact-btn:hover { background: var(--magenta); }
+
+  .modal-overlay { position: fixed; inset: 0; background: rgba(27,31,59,0.6); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--warm-white); border-radius: 24px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 40px; position: relative; transform: translateY(20px); transition: transform 0.25s; }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close { position: absolute; top: 20px; right: 20px; background: var(--cream); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+  .modal-close:hover { background: var(--magenta-light); color: var(--magenta-dark); }
+  .modal-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--magenta); margin-bottom: 8px; }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .modal-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.6; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 6px; }
+  .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 16px; font-size: 14px; font-family: 'DM Sans', sans-serif; border: 1px solid rgba(27,31,59,0.15); border-radius: 12px; background: var(--cream); color: var(--text-body); appearance: none; }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--magenta); }
+  .form-textarea { min-height: 100px; resize: vertical; }
+  .form-select-wrap { position: relative; }
+  .form-select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+  .form-submit { width: 100%; background: var(--magenta); color: #fff; border: none; border-radius: 100px; padding: 14px; font-size: 15px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 8px; }
+  .form-submit:hover { background: var(--magenta-dark); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; }
+  .form-success { text-align: center; padding: 20px 0; display: none; }
+  .success-icon { width: 64px; height: 64px; background: var(--magenta-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; }
+  .success-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .success-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 320px; margin: 0 auto 24px; }
+  .success-close { background: var(--navy); color: #fff; border: none; border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; }
+  .success-close:hover { background: var(--magenta); }
+  .empty-state { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 15px; }
+
+  footer { background: var(--navy); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #fff; text-decoration: none; }
+  .footer-logo span { color: var(--magenta); }
+  .footer-text { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .footer-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; }
+  .footer-link:hover { color: #fff; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-back { display: none; }
+    .page-header { grid-template-columns: 1fr; padding: 100px 20px 40px; gap: 16px; }
+    .header-stat { text-align: left; }
+    .filters-bar { padding: 0 20px 32px; }
+    .directory-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
+    .modal { padding: 28px 20px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://www.hire-a-va.net" class="nav-logo">Hire a <span>VA</span></a>
+  <div class="nav-links">
+    <a href="https://www.hire-a-va.net" class="nav-back">← Back to home</a>
+    <a href="https://www.hire-a-va.net/join-as-va" class="nav-cta">Join as a VA →</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div>
+    <div class="header-eyebrow">Browse the directory</div>
+    <h1 class="header-title">Find your <em>perfect</em><br>virtual assistant</h1>
+    <p class="header-sub">Every VA in this directory has been vetted by Chastity Cortijo, a 15-year VA industry veteran. Browse by specialty and reach out directly — no agency, no markup.</p>
+  </div>
+  <div class="header-stat">
+    <div class="header-stat-num" id="va-count">38</div>
+    <div class="header-stat-label">Vetted VAs listed</div>
+  </div>
+</div>
+
+<div class="filters-bar">
+  <span class="filter-label">Filter by</span>
+  <button class="filter-btn active" onclick="filterCards(this,'all')">All VAs</button>
+  <button class="filter-btn" onclick="filterCards(this,'General Support')">General Support</button>
+  <button class="filter-btn" onclick="filterCards(this,'Business Operations & HR Support')">Business Ops & HR</button>
+  <button class="filter-btn" onclick="filterCards(this,'Content & Social Media')">Content & Social Media</button>
+  <button class="filter-btn" onclick="filterCards(this,'Design & Branding')">Design & Branding</button>
+  <button class="filter-btn" onclick="filterCards(this,'Systems & Tech')">Systems & Tech</button>
+  <button class="filter-btn" onclick="filterCards(this,'Community & Client Relations')">Community & Client Relations</button>
+  <button class="filter-btn" onclick="filterCards(this,'Specialized Niches')">Specialized Niches</button>
+  <button class="filter-btn" onclick="filterCards(this,'Marketing & Growth')">Marketing & Growth</button>
+</div>
+
+<hr class="divider">
+<div class="directory-grid" id="va-grid"></div>
+
+<div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="form-view">
+      <div class="modal-eyebrow">Send a message</div>
+      <div class="modal-title" id="modal-title">Connect with a VA</div>
+      <div class="modal-sub">Fill out the form and we'll connect you within 24 hours.</div>
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="va_name" id="hidden-va-name">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input class="form-input" type="text" name="your_name" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your email</label>
+          <input class="form-input" type="email" name="your_email" placeholder="jane@yourbusiness.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Which VA are you interested in?</label>
+          <div class="form-select-wrap">
+            <select class="form-select" id="va-select" name="va_selected" required></select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell them what you need</label>
+          <textarea class="form-textarea" name="message" placeholder="e.g. I need help managing my inbox and social media, about 10 hours a week..." required></textarea>
+        </div>
+        <button class="form-submit" type="submit" id="submit-btn">Send my inquiry →</button>
+        <p class="form-note">We'll connect you with your chosen VA within 24 hours. No spam, ever.</p>
+      </form>
+    </div>
+    <div class="form-success" id="success-view">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Message sent!</div>
+      <p class="success-sub">We got your inquiry and will connect you with your VA within 24 hours. Check your inbox.</p>
+      <button class="success-close" onclick="closeModal()">Back to directory</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="https://www.hire-a-va.net" class="footer-logo">Hire a <span>VA</span></a>
+  <span class="footer-text">Part of the Brooklyn Pencil LLC community ecosystem</span>
+  <a href="https://www.skool.com/hire-a-va-4537/about" target="_blank" class="footer-link">skool.com/hire-a-va-4537 →</a>
+</footer>
+
+<script>
+const VAs = [
+  {name:"Sarah W.",business:"",location:"Norfolk, NE — CST",category:"General Support",availability:"Evenings 6–9 PM CST",bio:"With 20 years of administrative experience, Sarah brings professionalism, reliability, and calm structure to every client. She transitioned into the virtual space after two decades in traditional admin roles — anticipating needs, managing details, and keeping things running behind the scenes.",quote:"I bring 20 years of admin expertise — now virtual, but always personal.",skills:["Email Mgmt","Calendar Mgmt","Canva","Document Mgmt","Community Mgmt","Social Media"],website:"sarahvirtualassistant.com",instagram:"sarah__virtualassistant",initials:"SW"},
+  {name:"Teresa P.",business:"Agballa Creatives",location:"Ogden, UT — MST",category:"General Support",availability:"Afternoons 1–7 PM MST",bio:"A poet-writer and former English teacher turned creativity coach and VA. Teresa is a liberation & culture-based service provider who works with neurodivergent, chronically ill, and spiritual caretakers — honoring clients' natural rhythms and ways of working.",quote:"I help mission-driven humans build systems that honor both their work and their well-being.",skills:["Email Mgmt","Email Marketing","Project Mgmt","Canva","Community Mgmt","Body-Doubling"],website:"agballacreatives.my.canva.site",instagram:"creating.in.kapwa",initials:"TP"},
+  {name:"Tabitha P.",business:"The Hive Virtual Partners",location:"Nashville, TN — CST",category:"General Support",availability:"Mon–Fri 9 AM–4 PM CST",bio:"Tabitha combines reliability and grace — making sure clients feel supported, cared for, and genuinely valued. With 5+ years in virtual operations and creative support, she's detail-focused and proactive, balancing systems with a human touch.",quote:"I help your business run with calm precision — so your clients feel cared for every step of the way.",skills:["Email Mgmt","Calendar Mgmt","Content Creation","Project Mgmt","Canva","Data Entry"],website:"thehivevirtualpartners.com",instagram:"thehivevirtualpartners",initials:"TH"},
+  {name:"Ebony G.",business:"LORE Co.",location:"Little Neck, NY — EST",category:"General Support",availability:"10 AM onwards, open to late hours",bio:"Ebony supports clients the way a true sidekick would — jumping in wherever needed, adapting quickly, and bringing ideas to life. With 5+ years across operations, customer support, and project management, she brings structure and steady execution to every business.",quote:"I support clients like a true sidekick — adaptable, dependable, and always ready to bring their ideas to life.",skills:["Email Mgmt","Calendar Mgmt","Project Mgmt","Bookkeeping","Website Maintenance","Lead Gen"],website:"the-loreco.com",instagram:"the.loreco",initials:"EG"},
+  {name:"Karla H.",business:"",location:"Sunnyvale, CA — PST",category:"General Support",availability:"8 AM–5 PM PST",bio:"Bilingual (English/Spanish) VA with 14+ years in customer service and office administration. Clients describe her as personable, grounded, and easy to work with. She's social media and content savvy, helping businesses show up consistently online.",quote:"I'm here to make your business run smoother — and your days feel lighter.",skills:["Email Mgmt","Calendar Mgmt","Social Media Mgmt","Content Creation","Canva","Website Maintenance"],website:"hernvirtualsolutions.com",instagram:"KarlaTheVA",initials:"KH"},
+  {name:"Raegan A.",business:"",location:"Baltimore, MD — EST",category:"General Support",availability:"7 AM–6 PM EST",bio:"Raegan takes time to deeply understand your brand, goals, and pain points so support aligns with your vision. Whether optimizing operations or managing personal tasks that free up mental space, she shows up as a reliable partner who keeps everything running smoothly.",quote:"I don't just check boxes — I help you build momentum.",skills:["Email Mgmt","Social Media Mgmt","Content Creation","Project Mgmt","Bookkeeping","Copywriting"],instagram:"raebaya.assist",initials:"RA"},
+  {name:"Valencia D.",business:"",location:"Capitol Heights, MD — EST",category:"General Support",availability:"Varies throughout the day",bio:"Valencia Clipper-Davis has 20+ years of experience supporting leaders, entrepreneurs, and service-based organizations. As a Certified Master Life Coach, she brings a people-centered approach — helping clients stay focused, balanced, and productive.",quote:"I offer more than administrative support — I provide clarity, structure, and confidence.",skills:["Email Mgmt","Calendar Mgmt","Social Media Mgmt","Content Creation","Project Mgmt","Lead Gen"],website:"valenciacdavis.com",instagram:"valenciasworld",initials:"VD"},
+  {name:"Moesha M.",business:"",location:"Palm Bay, FL — EST",category:"General Support",availability:"Open mornings and nights EST",bio:"Moesha combines creativity, passion, problem solving, and strong technical skills to support business operations. She communicates with warmth, clarity, and empathy while bringing multi-industry experience in customer service, social media, design, and email marketing.",quote:"I combine creativity, passion, problem solving, and strong technical skills to support the operations behind a business.",skills:["Email Marketing","Social Media Mgmt","Lead Gen","Canva","Community Mgmt","Copywriting"],website:"fortunatedreamerscollect-slge2h4.gamma.site",initials:"MM"},
+  {name:"Audrey D.",business:"",location:"Batumi / Budapest / Singapore",category:"General Support",availability:"Generally 10 AM–3 PM, flexible",bio:"Drawing inspiration from her background in dance and wellness, Audrey brings a creative and mindful approach to every project. She focuses on clarity, communication, and results — helping businesses' online presence flow with purpose.",quote:"I combine creativity with clarity — helping your business flow with purpose.",skills:["Social Media Mgmt","Content Creation","Canva","Community Mgmt","CapCut","Metricool"],initials:"AD"},
+  {name:"Kimberly B.",business:"",location:"San Antonio, TX — CST",category:"General Support",availability:"Weekdays flexible — CST",bio:"As a mom of seven and an Air Force Veteran, Kimberly brings a disciplined, detail-oriented approach to administrative support. She specializes in keeping inboxes organized, calendars running smoothly, and customer communications handled with professionalism.",quote:"Detail-oriented, dependable support rooted in discipline, structure, and real-world experience.",skills:["Email Mgmt","Calendar Mgmt","Customer Service","Document Mgmt","Basic Bookkeeping","Canva"],instagram:"kimbaxley",initials:"KB"},
+  {name:"Ciara Lee",business:"Palmetto Jessamine",location:"Darlington, SC — EST",category:"General Support",availability:"9:30 AM–7 PM EST",bio:"Ciara genuinely enjoys being of assistance — especially with work that takes clients away from what only they can do. She's open and flexible with who she works with, bringing a warm and practical approach to every engagement.",quote:"I actually enjoy being of assistance to others, especially with the work that takes them away from what only they can do.",skills:["Email Mgmt","Calendar Mgmt","Social Media Mgmt","Content Creation","Canva","Project Mgmt"],website:"palmettojessamine.com",instagram:"palmettojessamine",initials:"CL"},
+  {name:"Dounya M.",business:"",location:"Addis Ababa, Ethiopia — EST Hours",category:"General Support",availability:"9 AM–5 PM EST",bio:"Dounya genuinely enjoys working as a VA and believes that when you love what you do, it reflects in the quality of your work. She brings deep multi-platform CRM experience and strong real estate industry knowledge.",quote:"I genuinely enjoy working as a VA, and I believe that when you love what you do, it reflects in the quality of your work.",skills:["Email Mgmt","Calendar Mgmt","Social Media Mgmt","CRM","Active Outreach","Document Mgmt"],initials:"DM"},
+  {name:"Joy A.",business:"The Virtual Joy",location:"Kampala, Uganda — EST Hours",category:"General Support",availability:"8 AM–5 PM EST",bio:"Joy takes advantage of the timezone difference to ease her clients' workload by delivering before they wake up. She specializes in podcast management, launch management, and community support alongside strong content and admin skills.",quote:"I always take advantage of the timezone difference to ensure I can ease your workload by delivering before you wake up.",skills:["Email Marketing","Content Creation","Project Mgmt","Canva","Community Mgmt","Podcast Mgmt"],website:"thevirtualjoy.com",instagram:"virtualjoyvj",initials:"JA"},
+  {name:"Pauline V.",business:"Designed By Sisterhood",location:"Hauppauge, NY — EST",category:"Business Operations & HR Support",availability:"Flexible depending on project scope",bio:"With extensive experience in healthcare project management, Pauline has opened and overseen 20+ healthcare facilities — from space planning and interior design to procurement and operational readiness. She's a vision builder who turns blueprints into reality.",quote:"I turn vision into operational reality — with clarity and momentum.",skills:["Project Mgmt","Google Workspace","Wave","Wix","Canva Pro","Smartsheet"],website:"designedbysisterhood.com",instagram:"designedbysisterhood",initials:"PV"},
+  {name:"Gail K.",business:"Keina Co",location:"Holywell, Wales, UK — GMT",category:"Business Operations & HR Support",availability:"Mon–Fri 9 AM–5 PM UK, flexible for international",bio:"Gail combines 20+ years of bookkeeping experience with a strong focus on helping business owners simplify and understand their finances. Her approach goes beyond admin — she helps clients build organised, sustainable systems that free up time and mental space.",quote:"I don't just manage your books — I help you build systems that make your business feel lighter.",skills:["Bookkeeping","Email Marketing","Social Media Mgmt","Copywriting","Xero","Sage"],website:"keinaco.com",instagram:"keinaco",initials:"GK"},
+  {name:"Jennifer F.",business:"Willow Lane Virtual",location:"Bay Area, CA — PST",category:"Business Operations & HR Support",availability:"Mon–Fri 8 AM–3 PM PST",bio:"Jennifer brings a dependable and detail-oriented approach to virtual assistance and bookkeeping for service-based business owners. She understands that running a small business means juggling many priorities — and the paperwork can pile up quickly.",quote:"My mission is to provide reliable, detail-oriented support that helps business owners take back their time and operate with confidence.",skills:["Email Mgmt","Calendar Mgmt","Bookkeeping","Project Mgmt","Customer Service","Document Mgmt"],website:"willowlanevirtual.com",instagram:"willow.lane.vs",initials:"JF"},
+  {name:"Caitlyn F.",business:"Frazier Solutions",location:"Murfreesboro, TN — CST",category:"Business Operations & HR Support",availability:"9 AM–5 PM CST",bio:"Caitlyn helps businesses run smoother by creating simple systems that save time and cut stress. She focuses on the details, stays three steps ahead, and makes sure her clients always feel supported and understood.",quote:"I build simple systems that free you up to work on what matters.",skills:["Email Mgmt","Project Mgmt","Bookkeeping","Social Media Mgmt","Canva","QuickBooks"],website:"caitlynmarandava.com",instagram:"caitlyn_marandava",initials:"CF"},
+  {name:"Antonia J.",business:"Prestige Business Suite",location:"Piscataway, NJ — EST",category:"Business Operations & HR Support",availability:"Flexible — evenings and weekends",bio:"Antonia combines two decades of administrative expertise and a decade of HR leadership to deliver strategic, high-level virtual support. She provides fractional HR leadership including CHRO, Director of HR, VP of HR, and HRBP-level support.",quote:"Any and all. Wherever employees are, I'm there.",skills:["HR Recruitment","Onboarding","HR Compliance","Employee Relations","Policy Mgmt","Performance Mgmt"],website:"prestigebusinesssuite.com",instagram:"prestigebusinesssuite",initials:"AJ"},
+  {name:"LaToya M.",business:"Virtual Help Specialists",location:"Alexandria, VA — EST",category:"Business Operations & HR Support",availability:"Weekdays, standard hours with flexibility",bio:"LaToya brings executive-level administrative support, operations strategy, and client experience management. She creates calm in fast-paced environments and helps founders reclaim their time with systems, structure, and timeless support.",quote:"I create calm in fast-paced environments and help founders reclaim their time with systems and structure.",skills:["Email Mgmt","Project Mgmt","Bookkeeping","Social Media Mgmt","Canva","Copywriting"],website:"thisisvhs.com",instagram:"this.is.vhs",initials:"LM"},
+  {name:"Aisha B.",business:"Elite Driven Solutions",location:"Spring, TX — CST",category:"Business Operations & HR Support",availability:"8 AM–4 PM CST",bio:"Aisha supports coaches, creators, small business owners, and faith-centered leaders — especially those who need systems, structure, and administrative support to grow. She blends strong operations skills with genuine care and a calm, solution-focused approach.",quote:"I blend strong systems and operations skills with genuine care, clear communication, and a calm, solution-focused approach.",skills:["Email Mgmt","Email Marketing","Calendar Mgmt","Social Media Mgmt","Lead Gen","Canva"],initials:"AB"},
+  {name:"Tiffany S.",business:"Ezrah Agency",location:"Atlanta, GA — EST",category:"Business Operations & HR Support",availability:"9 AM–5 PM EST",bio:"Tiffany is organized, proactive, and takes pride in creating efficiencies and making life easier for the teams and clients she supports. Her experience in both marketing and administrative roles has given her the ability to juggle multiple priorities and adapt quickly.",quote:"I don't just get the job done — I make it better.",skills:["Email Mgmt","Social Media Mgmt","Content Creation","Project Mgmt","Bookkeeping","Canva"],initials:"TS"},
+  {name:"Katherine G.",business:"",location:"Saint Paul, MN — CST",category:"Business Operations & HR Support",availability:"8 AM–4 PM CST with flexibility",bio:"Katherine communicates clearly, directly, and with genuine problem-solving focus. Her clients appreciate that they don't have to micromanage her — she thinks about how work flows and is always looking for ways to make things run smoother.",quote:"I'm not just here to check boxes — I actually think about how the work flows.",skills:["Email Mgmt","Calendar Mgmt","Project Mgmt","Canva","Community Mgmt","Document Mgmt"],website:"withkatherinegrimm.com",initials:"KG"},
+  {name:"Charity N.",business:"",location:"Kampala, Uganda — GMT+3",category:"Business Operations & HR Support",availability:"Flexible hours GMT+3",bio:"Charity brings solid administrative and organizational skills along with experience in finance and bookkeeping. She manages daily tasks efficiently, helps keep financial records accurate, pays close attention to details, and learns new tools quickly.",quote:"I bring solid administrative and organizational skills along with finance and bookkeeping experience, helping businesses run efficiently.",skills:["Email Mgmt","Calendar Mgmt","Project Mgmt","Bookkeeping","Document Mgmt","QuickBooks"],initials:"CN"},
+  {name:"Rochelle D.",business:"Virtually By Elle",location:"New York, NY — EST",category:"Business Operations & HR Support",availability:"Weekdays 9 AM–5 PM EST",bio:"Rochelle specializes in building and maintaining streamlined back-end operations for service-based businesses. Her work focuses on creating clear systems, clean documentation, and sustainable workflows that support long-term growth without overcomplication.",quote:"My work focuses on creating clear systems, clean documentation, and sustainable workflows that support long-term growth.",skills:["Email Mgmt","Project Mgmt","Bookkeeping","Systems Setup","Online Business Mgmt","Zapier"],website:"virtuallybyelle.com",instagram:"virtuallybyelle",initials:"RD"},
+  {name:"Gabrielle C.",business:"GC Method",location:"Arvada, CO — MST",category:"Business Operations & HR Support",availability:"Mon–Fri 10 AM–8 PM MST",bio:"Gabrielle is an OBM who focuses on the systems business owners have. She reviews what currently works and what the goals are, tailoring her services accordingly. She listens, gathers information, then analyzes what the business needs to thrive and grow.",quote:"I am a partner who works with the business. I'll strategize with you, go through the struggle with you, and cheer you on every step of the way.",skills:["Email Marketing","Social Media Mgmt","Project Mgmt","Bookkeeping","Canva","Copywriting"],website:"yourgcmethod.com",instagram:"yourgcmethod",initials:"GC"},
+  {name:"Gisela J.",business:"Talent Alchemy",location:"Johannesburg, South Africa — SAST",category:"Business Operations & HR Support",availability:"Monday–Friday",bio:"Systems-driven VA with 15+ years supporting founders, executives, and online businesses. Gisela translates big ideas into clear workflows and keeps things organised in fast-moving environments — bringing corporate-level structure without the rigidity.",quote:"I don't just tick off tasks — I think proactively, spot gaps early, and create simple systems that make businesses run more smoothly.",skills:["Project Mgmt","Website Maintenance","Launch Support","CRM Setup","SOP Creation","Zapier"],website:"talentalchemy.co.za",instagram:"talentalchemy",initials:"GJ"},
+  {name:"Olayinka I.",business:"",location:"London, UK — GMT",category:"Business Operations & HR Support",availability:"Mon–Fri 9 AM–6 PM GMT",bio:"Olayinka combines delivery management, business analysis, customer service, and digital marketing experience — providing structured, insight-led support rather than task-only assistance. She focuses on efficiency, clear communication, and systems that help businesses scale.",quote:"I combine delivery management, business analysis, customer service, and digital marketing experience for structured, insight-led support.",skills:["Email Mgmt","Social Media Mgmt","Project Mgmt","Community Mgmt","Reporting & Analytics","HubSpot"],instagram:"yeencah_ige",initials:"OI"},
+  {name:"Sonja C.",business:"On The Go VA",location:"Birmingham, AL — CST",category:"Business Operations & HR Support",availability:"8 AM–5 PM CST",bio:"Sonja has 25+ years of administrative experience and is an expert in customer support. She has deep experience in legal and medical environments and brings a steady, professional hand to every client she works with.",quote:"I have over 25 years of administrative experience. I am an expert in customer support.",skills:["Email Mgmt","Calendar Mgmt","Customer Service","Bookkeeping","Website Maintenance","Legal Assistant"],website:"onthegova.com",instagram:"sonjacurtis",initials:"SC"},
+  {name:"Jen K.",business:"",location:"Alliance, OH — EST",category:"Content & Social Media",availability:"11 AM–3 PM EST, evenings & weekends available",bio:"Jen helps business owners grow with long-term, sustainable content systems — especially through Pinterest. She takes a brand's message and turns it into clear, organized, and consistent visibility, focusing on strategies that compound over time.",quote:"I specialize in Pinterest for long-term sustainable online business growth strategies.",skills:["Pinterest Mgmt","Email Marketing","Social Media Mgmt","Content Creation","Website Maintenance","Project Mgmt"],website:"jenkibler.com",instagram:"jenkibleronline",initials:"JK"},
+  {name:"Alexandra H.",business:"VA Anywhere",location:"Los Angeles, CA — PST",category:"Content & Social Media",availability:"Early morning + evenings",bio:"Alexandra is grounded and intuitive — patience is a strength of hers and makes her easy to collaborate with. She gets passionate about the clients she works with and brings high energy to the day-to-day.",quote:"I get really passionate about the clients I work with and their business and bring a high energy to the day-to-day.",skills:["Email Mgmt","Social Media Mgmt","Project Mgmt","Canva","Website Maintenance","Podcast Support"],website:"vaanywhere.com",instagram:"virtuallyanywhereagency",initials:"AH"},
+  {name:"Diana G.",business:"Elevate With Diana",location:"Miami, FL — EST",category:"Content & Social Media",availability:"9 AM–5 PM EST",bio:"With 10+ years in sales, client communication, and digital operations, Diana understands both the strategy and execution behind successful businesses. She's proactive, results-driven, and focused on revenue-impacting work — not busy work.",quote:"I treat every business I support as if it were my own — with integrity, accountability, and attention to detail.",skills:["Social Media Mgmt","Content Creation","DM & Community Mgmt","CRM Mgmt","Canva","CapCut"],instagram:"dianagodoyofficial",initials:"DG"},
+  {name:"Jonatta H.",business:"FBTS NC",location:"Greenville, NC — EST",category:"Design & Branding",availability:"9 AM–5 PM EST",bio:"Jonatta leverages her passion for creativity and strategic project management to build solutions that answer a company's needs. She specializes in brand identity, AI app creation, AI photography, and web design in Wix and Canva.",quote:"I am well-equipped to build solutions that will be the answers to a company's needs.",skills:["Brand Identity","Canva","Wix Design","AI App Creation","Social Media Mgmt","Event Planning"],website:"fbtsnc.com",initials:"JH"},
+  {name:"Junnette C.",business:"Virtually Junny",location:"Pasig City, Philippines — CET Hours",category:"Systems & Tech",availability:"3 PM–11 PM Manila (≈ 8 AM–4 PM CET)",bio:"Junnette's specialty is funnels and automations for coaches and course creators. She runs a small team with strengths across design, admin, podcast/video editing, and management — so clients get the right support without hunting for multiple contractors.",quote:"Systems and automations that let your business run — even when you're off.",skills:["Funnel Building","Automations","Kajabi","Zapier","Podcast Editing","Landing Pages"],website:"virtuallyjunny.com",instagram:"virtuallyjunny",initials:"JC"},
+  {name:"Faith U.",business:"",location:"Abuja, Nigeria — WAT",category:"Systems & Tech",availability:"Mon–Fri 10 AM–4 PM WAT",bio:"Faith provides reliable support with specialized systems & tech skills — setting up workflows, automations, and organized processes that save time, reduce errors, and help teams work smarter. She's quick to learn new systems and focused on calm, efficient operations.",quote:"I build the workflows that keep your business moving — clean, calm, and under control.",skills:["Workflow Automation","Project Mgmt","CRM Mgmt","SOP Creation","ClickUp","Zapier"],instagram:"faithugwulebo",initials:"FU"},
+  {name:"BarbaraAnn H.",business:"",location:"Canada — PST/EST/Atlantic",category:"Community & Client Relations",availability:"5 AM–2 PM",bio:"Deeply intuitive and able to multitask, meet deadlines, and provide stress-free assistance. BarbaraAnn brings a broad range of skills including community management, workshops, webinars, and collaborative events alongside strong admin and marketing support.",quote:"Deeply intuitive, able to multitask, meet deadlines, and provide stress-free assistance.",skills:["Email Marketing","Social Media Mgmt","Community Mgmt","Copywriting","Lead Gen","Workshops"],initials:"BH"},
+  {name:"GeLisa Marie",business:"Brunson Creative Admins",location:"Chicago, IL — CST",category:"Community & Client Relations",availability:"Tue–Sat 8 AM–3 PM CST",bio:"GeLisa's past role as creative director for a parent education company allows her to understand the creative vision and the backend systems required to execute it. She bridges creative thinking with operational execution seamlessly.",quote:"My past role as a creative director allows me to understand the creative vision and the backend systems required to execute it.",skills:["Email Mgmt","Calendar Mgmt","Customer Service","Project Mgmt","Community Mgmt","Active Outreach"],website:"brunsoncreativeadmins.com",instagram:"virtuallygelisabrunson",initials:"GM"},
+  {name:"Renata M.",business:"In Collab Designs",location:"Atlanta, GA — EST",category:"Specialized Niches",availability:"Flexible depending on project EST",bio:"Renata approaches operations from a strategic perspective rather than a task-based one. She helps business owners clarify how their workflows, systems, and client experience should function so growth feels structured instead of overwhelming. She also specializes in corporate retreat and immersive experience design.",quote:"I approach operations from a strategic perspective rather than a task-based one.",skills:["Operations Strategy","Business Systems Design","SOP Documentation","CRM Setup","Launch Planning","Event Design"],website:"incollabdesigns.com",initials:"RM"}
+];
+
+function getColor(initials) {
+  const colors=[{bg:'#f0d6e8',text:'#8a0049'},{bg:'#dbeafe',text:'#1e40af'},{bg:'#d1fae5',text:'#065f46'},{bg:'#fef3c7',text:'#92400e'},{bg:'#ede9fe',text:'#5b21b6'},{bg:'#fee2e2',text:'#991b1b'},{bg:'#d1faf5',text:'#0f5c50'},{bg:'#fce7f3',text:'#831843'}];
+  return colors[((initials.charCodeAt(0)||0)+(initials.charCodeAt(1)||0))%colors.length];
+}
+
+function renderCards(filter) {
+  const grid = document.getElementById('va-grid');
+  const list = filter==='all' ? VAs : VAs.filter(v=>v.category===filter);
+  if (!list.length) { grid.innerHTML='<div class="empty-state">No VAs in this category yet.</div>'; return; }
+  grid.innerHTML = list.map(va => {
+    const c = getColor(va.initials);
+    const first = va.name.split(' ')[0];
+    const links = [
+      va.website ? `<a class="va-link" href="https://${va.website.replace(/^https?:\/\//,'')}" target="_blank">🌐 Website</a>` : '',
+      va.instagram ? `<a class="va-link" href="https://instagram.com/${va.instagram}" target="_blank">📸 @${va.instagram}</a>` : ''
+    ].filter(Boolean).join('');
+    return `<div class="va-card">
+      <div class="va-card-top">
+        <div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div>
+        <div class="va-info">
+          <div class="va-name">${va.name}</div>
+          ${va.business?`<div class="va-business">${va.business}</div>`:''}
+          <div class="va-location">📍 ${va.location}</div>
+        </div>
+      </div>
+      <div class="va-category">${va.category}</div>
+      <p class="va-bio">${va.bio}</p>
+      ${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}
+      <div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>
+      ${links?`<div class="va-links">${links}</div>`:''}
+      <div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div>
+      <button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button>
+    </div>`;
+  }).join('');
+}
+
+function filterCards(btn, filter) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(filter);
+}
+
+function populateSelect(pre) {
+  const sel = document.getElementById('va-select');
+  sel.innerHTML = '<option value="">Select a VA...</option>' +
+    VAs.map(v=>`<option value="${v.name}" ${v.name===pre?'selected':''}>${v.name}${v.business?' ('+v.business+')':''}</option>`).join('');
+}
+
+function openModal(name) {
+  document.getElementById('modal-title').textContent = `Connect with ${name.split(' ')[0]}`;
+  document.getElementById('hidden-va-name').value = name;
+  populateSelect(name);
+  document.getElementById('form-view').style.display='block';
+  document.getElementById('success-view').style.display='none';
+  document.getElementById('contact-form').reset();
+  populateSelect(name);
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function handleOverlayClick(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='Sending...';
+  try {
+    const r = await fetch(e.target.action,{method:'POST',body:new FormData(e.target),headers:{'Accept':'application/json'}});
+    if(r.ok){document.getElementById('form-view').style.display='none';document.getElementById('success-view').style.display='block';}
+    else throw new Error();
+  } catch { alert('Something went wrong. Please try again.'); btn.disabled=false; btn.textContent='Send my inquiry →'; }
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.getElementById('va-count').textContent=VAs.length;
+renderCards('all');
+</script>
+</body>
+</html>
