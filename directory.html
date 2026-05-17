@@ -119,15 +119,15 @@
   <a href="https://www.hire-a-va.net" class="nav-logo">Hire a <span>VA</span></a>
   <div class="nav-links">
     <a href="https://www.hire-a-va.net" class="nav-back">← Back to home</a>
-    <a href="https://www.skool.com/hire-a-va-4537/about" class="nav-cta">Join as a VA →</a>
+    <a href="https://www.hire-a-va.net/join-as-va" class="nav-cta">Join as a VA →</a>
   </div>
 </nav>
 
 <div class="page-header">
   <div>
     <div class="header-eyebrow">Browse the directory</div>
-    <h1 class="header-title">Find your <em>perfect</em><br>Virtual Assistant</h1>
-    <p class="header-sub">Every service provider in this directory has been vetted by a 15-year VA industry veteran. Browse by specialty and reach out directly. No agency, no markup.</p>
+    <h1 class="header-title">Find your <em>perfect</em><br>virtual assistant</h1>
+    <p class="header-sub">Every VA in this directory has been vetted by Chastity Cortijo, a 15-year VA industry veteran. Browse by specialty and reach out directly — no agency, no markup.</p>
   </div>
   <div class="header-stat">
     <div class="header-stat-num" id="va-count">38</div>
@@ -149,6 +149,23 @@
 </div>
 
 <hr class="divider">
+
+<!-- CLARITY CALL BANNER -->
+<div style="max-width:1200px;margin:0 auto 48px;padding:0 40px;">
+  <div style="background:var(--navy);border-radius:20px;padding:40px 48px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;">
+    <div>
+      <div style="font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--magenta-light);margin-bottom:12px;">Not sure where to start?</div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:#fff;line-height:1.2;margin-bottom:16px;">Find Your VA <em style="font-style:italic;color:#C4006A;">Clarity Call</em></div>
+      <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,0.65);line-height:1.7;max-width:520px;">Not sure what kind of VA you need — or where to even start? I'm Chastity, VA veteran of 15 years and founder of Hire a VA. I've hired, trained, and matched dozens of VAs with business owners. In 30 minutes I'll tell you exactly what to delegate, what to pay, and who to look for. Hire right the first time.</p>
+    </div>
+    <div style="text-align:center;flex-shrink:0;">
+      <div style="font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#fff;line-height:1;">$97</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:20px;">30-minute call</div>
+      <a href="https://buy.stripe.com/28EfZi2HFeX53YxfSYdAk00" target="_blank" style="background:var(--magenta);color:#fff;text-decoration:none;font-size:14px;font-weight:500;padding:14px 28px;border-radius:100px;display:inline-block;transition:background 0.2s;">Book Your Call →</a>
+    </div>
+  </div>
+</div>
+
 <div class="directory-grid" id="va-grid"></div>
 
 <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
@@ -158,7 +175,7 @@
       <div class="modal-eyebrow">Send a message</div>
       <div class="modal-title" id="modal-title">Connect with a VA</div>
       <div class="modal-sub">Fill out the form and we'll connect you within 24 hours.</div>
-      <form id="contact-form" action="https://formspree.io/f/xredzjbl" method="POST" onsubmit="handleSubmit(event)">
+      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
         <input type="hidden" name="va_name" id="hidden-va-name">
         <div class="form-group">
           <label class="form-label">Your name</label>
