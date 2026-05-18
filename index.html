@@ -321,6 +321,8 @@ async function handleSubmit(e) {
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 document.getElementById('va-count').textContent=VAs.length;
+function shuffle(arr){let i=arr.length,j,t;while(i--){j=Math.floor(Math.random()*(i+1));t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
+shuffle(VAs);
 renderCards('all');
 </script>
 </body>
