@@ -142,7 +142,10 @@
     <div class="header-stat-label">Vetted VAs listed</div>
   </div>
 </div>
-
+<!-- SEARCH BAR -->
+<div style="max-width:1200px;margin:0 auto;padding:0 40px 24px;">
+  <input type="text" id="search-input" placeholder="Search by skill, tool, or specialty... e.g. HoneyBook, QuickBooks, real estate" style="width:100%;padding:14px 20px;font-size:15px;font-family:'DM Sans',sans-serif;border:1px solid rgba(27,31,59,0.15);border-radius:100px;background:#FFFCFA;color:#3a3a3a;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#C4006A'" onblur="this.style.borderColor='rgba(27,31,59,0.15)'">
+</div>
 <div class="filters-bar">
   <span class="filter-label">Filter by</span>
   <button class="filter-btn active" onclick="filterCards(this,'all')">All VAs</button>
@@ -329,6 +332,27 @@ async function handleSubmit(e) {
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 document.getElementById('va-count').textContent=VAs.length;
+ document.getElementById('search-input').addEventListener('input', function() {
+  const term = this.value.toLowerCase().trim();
+  if (!term) { renderCards('all'); document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active', i===0)); return; }
+  const grid = document.getElementById('va-grid');
+  const filtered = VAs.filter(va =>
+    va.name.toLowerCase().includes(term) ||
+    va.bio.toLowerCase().includes(term) ||
+    va.category.toLowerCase().includes(term) ||
+    (va.skills && va.skills.some(s => s.toLowerCase().includes(term))) ||
+    (va.industries && va.industries.toLowerCase().includes(term)) ||
+    (va.business && va.business.toLowerCase().includes(term)) ||
+    (va.location && va.location.toLowerCase().includes(term))
+  );
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state">No VAs found matching your search. Try a different skill or specialty.</div>'; return; }
+  grid.innerHTML = filtered.map(va => {
+    const c = getColor(va.initials);
+    const first = va.name.split(' ')[0];
+    const links = [va.website ? `<a class="va-link" href="https://${va.website.replace(/^https?:\/\//,'')}" target="_blank">🌐 Website</a>` : '', va.instagram ? `<a class="va-link" href="https://instagram.com/${va.instagram}" target="_blank">📸 @${va.instagram}</a>` : ''].filter(Boolean).join('');
+    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div><button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
+  }).join('');
+});
 function shuffle(arr){let i=arr.length,j,t;while(i--){j=Math.floor(Math.random()*(i+1));t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
 shuffle(VAs);
 renderCards('all');
