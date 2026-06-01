@@ -107,10 +107,20 @@
   .footer-text { font-size: 13px; color: rgba(255,255,255,0.4); }
   .footer-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; }
   .footer-link:hover { color: #fff; }
-  .tags-bar { padding: 0 40px 32px; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .tag-btn { background: var(--warm-white); border: 1px solid rgba(196,0,106,0.2); border-radius: 100px; padding: 7px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--magenta-dark); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-  .tag-btn:hover { background: var(--magenta-light); border-color: var(--magenta); }
-  .tag-btn.active { background: var(--magenta); border-color: var(--magenta); color: #fff; font-weight: 500; }
+  .filters-bar { padding: 0 40px 16px; max-width: 1200px; margin: 0 auto; }
+.filter-section { margin-bottom: 12px; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; display: block; }
+.filter-btn { background: var(--warm-white); border: 1px solid rgba(27,31,59,0.12); border-radius: 100px; padding: 7px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.filter-btn:hover { border-color: var(--magenta); color: var(--navy); }
+.filter-btn.active { background: var(--magenta); border-color: var(--magenta); color: #fff; font-weight: 500; }
+.tag-btn { background: #fdf0f7; border: 1px solid rgba(196,0,106,0.25); border-radius: 100px; padding: 7px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--magenta-dark); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.tag-btn:hover { background: var(--magenta-light); border-color: var(--magenta); }
+.tag-btn.active { background: var(--magenta); border-color: var(--magenta); color: #fff; font-weight: 500; }
+.more-btn { background: transparent; border: 1px dashed rgba(27,31,59,0.2); border-radius: 100px; padding: 7px 16px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.more-btn:hover { border-color: var(--navy); color: var(--navy); }
+.hidden-filters { display: none; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.hidden-filters.open { display: flex; }
 
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
