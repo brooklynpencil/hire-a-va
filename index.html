@@ -161,34 +161,44 @@
   <input type="text" id="search-input" placeholder="Search by skill, tool, or specialty... e.g. HoneyBook, QuickBooks, real estate" style="width:100%;padding:14px 20px;font-size:15px;font-family:'DM Sans',sans-serif;border:1px solid rgba(27,31,59,0.15);border-radius:100px;background:#FFFCFA;color:#3a3a3a;outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#C4006A'" onblur="this.style.borderColor='rgba(27,31,59,0.15)'">
 </div>
 <div class="filters-bar">
-  <span class="filter-label">Filter by</span>
-  <button class="filter-btn active" onclick="filterCards(this,'all')">All VAs</button>
-  <button class="filter-btn" onclick="filterCards(this,'General Support')">General Support</button>
-  <button class="filter-btn" onclick="filterCards(this,'Business Operations & HR Support')">Business Ops & HR</button>
-  <button class="filter-btn" onclick="filterCards(this,'Content & Social Media')">Content & Social Media</button>
-  <button class="filter-btn" onclick="filterCards(this,'Design & Branding')">Design & Branding</button>
-  <button class="filter-btn" onclick="filterCards(this,'Systems & Tech')">Systems & Tech</button>
-  <button class="filter-btn" onclick="filterCards(this,'Community & Client Relations')">Community & Client Relations</button>
-  <button class="filter-btn" onclick="filterCards(this,'Specialized Niches')">Specialized Niches</button>
-  <button class="filter-btn" onclick="filterCards(this,'Marketing & Growth')">Marketing & Growth</button>
+  <div class="filter-section">
+    <span class="filter-label">Filter by category</span>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterCards(this,'all')">All VAs</button>
+      <button class="filter-btn" onclick="filterCards(this,'General Support')">General Support</button>
+      <button class="filter-btn" onclick="filterCards(this,'Business Operations & HR Support')">Business Ops & HR</button>
+      <button class="filter-btn" onclick="filterCards(this,'Content & Social Media')">Content & Social Media</button>
+      <button class="more-btn" onclick="this.closest('.filter-section').querySelector('.hidden-filters').classList.toggle('open');this.textContent=this.textContent.includes('+') ? '− Less' : '+ 5 more'">+ 5 more</button>
+    </div>
+    <div class="hidden-filters">
+      <button class="filter-btn" onclick="filterCards(this,'Design & Branding')">Design & Branding</button>
+      <button class="filter-btn" onclick="filterCards(this,'Systems & Tech')">Systems & Tech</button>
+      <button class="filter-btn" onclick="filterCards(this,'Community & Client Relations')">Community & Client Relations</button>
+      <button class="filter-btn" onclick="filterCards(this,'Specialized Niches')">Specialized Niches</button>
+      <button class="filter-btn" onclick="filterCards(this,'Marketing & Growth')">Marketing & Growth</button>
+    </div>
+  </div>
+  <div class="filter-section">
+    <span class="filter-label">Filter by specialty</span>
+    <div class="filter-row">
+      <button class="tag-btn" onclick="filterByTag(this,'Healthcare & Medical')">Healthcare & Medical</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Real Estate')">Real Estate</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Bookkeeping')">Bookkeeping</button>
+      <button class="tag-btn" onclick="filterByTag(this,'E-commerce')">E-commerce</button>
+      <button class="more-btn" onclick="this.closest('.filter-section').querySelector('.hidden-filters').classList.toggle('open');this.textContent=this.textContent.includes('+') ? '− Less' : '+ 8 more'">+ 8 more</button>
+    </div>
+    <div class="hidden-filters">
+      <button class="tag-btn" onclick="filterByTag(this,'Legal')">Legal</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Coaching & Consulting')">Coaching & Consulting</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Faith-based')">Faith-based</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Bilingual')">Bilingual</button>
+      <button class="tag-btn" onclick="filterByTag(this,'HR & Recruiting')">HR & Recruiting</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Funnel Building')">Funnel Building</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Pinterest')">Pinterest</button>
+      <button class="tag-btn" onclick="filterByTag(this,'Executive Support')">Executive Support</button>
+    </div>
+  </div>
 </div>
-<div class="tags-bar">
-  <span class="filter-label">Filter by specialty</span>
-  <button class="tag-btn" onclick="filterByTag(this,'Healthcare & Medical')">Healthcare & Medical</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Real Estate')">Real Estate</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Legal')">Legal</button>
-  <button class="tag-btn" onclick="filterByTag(this,'E-commerce')">E-commerce</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Coaching & Consulting')">Coaching & Consulting</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Faith-based')">Faith-based</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Bookkeeping')">Bookkeeping</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Bilingual')">Bilingual</button>
-  <button class="tag-btn" onclick="filterByTag(this,'HR & Recruiting')">HR & Recruiting</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Funnel Building')">Funnel Building</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Pinterest')">Pinterest</button>
-  <button class="tag-btn" onclick="filterByTag(this,'Executive Support')">Executive Support</button>
-</div>
-<hr class="divider">
-
 <div class="directory-grid" id="va-grid"></div>
 
 <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
