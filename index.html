@@ -72,6 +72,8 @@
   .va-meta-item strong { color: var(--navy); font-weight: 500; font-size: 12px; }
   .contact-btn { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 100px; padding: 12px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
   .contact-btn:hover { background: var(--magenta); }
+  .va-profile-link { display: block; text-align: center; font-size: 14px; font-weight: 500; color: var(--magenta); text-decoration: none; margin-bottom: 12px; }
+  .va-profile-link:hover { color: var(--magenta-dark); text-decoration: underline; }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(27,31,59,0.6); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
@@ -251,6 +253,17 @@
 
 <script>
 // Total VAs: 40
+// ---- Individual profile pages ----
+// Add a VA's name here (exactly as it appears in the list below) once her profile page is live.
+// Only VAs listed here get a "View full profile" link, so no card ever points to a missing page.
+const PROFILE_BASE = 'https://www.hire-a-va.net/va/';
+const PROFILE_NAMES = [];
+function profileUrl(va) {
+  if (!PROFILE_NAMES.includes(va.name)) return '';
+  const slug = va.name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
+  return PROFILE_BASE + slug;
+}
+
 const VAs = [
   {name:"Sarah W.",business:"Sarah Wortmann Virtual Assistant",location:"Norfolk, Nebraska, USA — CST",category:"General Support",availability:"Evenings 6–9 PM CST",bio:"With 20 years of administrative experience, Sarah brings professionalism, reliability, and calm structure to every client. She transitioned into the virtual space after two decades in traditional admin roles — anticipating needs, managing details, and keeping things running behind the scenes.",quote:"I bring 20 years of admin expertise — now virtual, but always personal.",skills:["Email Mgmt","Calendar Mgmt","Canva","Document Mgmt","Community Mgmt","Social Media Mgmt"],tools:["HoneyBook","Google Workspace"],industries:"Coaching/Consulting, Real Estate, Health/Wellness, Legal, photographers, realtors, legal professionals",website:"sarahvirtualassistant.com",instagram:"Sarah__virtualassistant",linkedin:"",threads:"",tags:["Real Estate","Coaching & Consulting"],initials:"SW"},
   {name:"Gail K.",business:"Keina Co",location:"Holywell, Wales, United Kingdom — GMT",category:"Business Operations & HR Support",availability:"Mon–Fri 9 AM–5 PM UK, flexible for international",bio:"Gail combines over 20 years of bookkeeping experience with a strong focus on helping business owners simplify and understand their finances. Her approach goes beyond admin — she helps clients build organised, sustainable systems that free up time and mental space.",quote:"I combine over 20 years of bookkeeping experience with a strong focus on helping business owners simplify and understand their finances.",skills:["Email Mgmt","Email Marketing","Calendar Mgmt","Social Media Mgmt","Content Creation","Bookkeeping"],tools:["Xero","Sage","Microsoft Office"],industries:"Coaching/Consulting, small business, trades, hairdressers, self-employed tradespeople, beauty & wellness",website:"keinaco.com",instagram:"keinaco",linkedin:"",threads:"",tags:["Bookkeeping","Coaching & Consulting"],initials:"GK"},
@@ -319,7 +332,7 @@ function renderCards(filter) {
       va.instagram ? `<a class="va-link" href="https://instagram.com/${va.instagram}" target="_blank">📸 @${va.instagram}</a>` : '',
       va.linkedin ? `<a class="va-link" href="https://${va.linkedin}" target="_blank">💼 LinkedIn</a>` : ''
     ].filter(Boolean).join('');
-    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div><button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
+    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div>${profileUrl(va)?`<a class="va-profile-link" href="${profileUrl(va)}">View full profile →</a>`:''}<button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
   }).join('');
 }
 function filterByTag(btn, tag) {
@@ -333,7 +346,7 @@ function filterByTag(btn, tag) {
     const c = getColor(va.initials);
     const first = va.name.split(' ')[0];
     const links = [va.website ? `<a class="va-link" href="https://${va.website.replace(/^https?:\/\//,'')}" target="_blank">🌐 Website</a>` : '', va.instagram ? `<a class="va-link" href="https://instagram.com/${va.instagram}" target="_blank">📸 @${va.instagram}</a>` : '', va.linkedin ? `<a class="va-link" href="https://${va.linkedin}" target="_blank">💼 LinkedIn</a>` : ''].filter(Boolean).join('');
-    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div><button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
+    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div>${profileUrl(va)?`<a class="va-profile-link" href="${profileUrl(va)}">View full profile →</a>`:''}<button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
   }).join('');
 }
 function filterCards(btn, filter) {
@@ -404,7 +417,7 @@ document.getElementById('search-input').addEventListener('input', function() {
       va.instagram ? `<a class="va-link" href="https://instagram.com/${va.instagram}" target="_blank">📸 @${va.instagram}</a>` : '',
       va.linkedin ? `<a class="va-link" href="https://${va.linkedin}" target="_blank">💼 LinkedIn</a>` : ''
     ].filter(Boolean).join('');
-    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div><button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
+    return `<div class="va-card"><div class="va-card-top"><div class="va-initials" style="background:${c.bg};color:${c.text}">${va.initials}</div><div class="va-info"><div class="va-name">${va.name}</div>${va.business?`<div class="va-business">${va.business}</div>`:''}<div class="va-location">📍 ${va.location}</div></div></div><div class="va-category">${va.category}</div><p class="va-bio">${va.bio}</p>${va.quote?`<div class="va-quote">"${va.quote}"</div>`:''}<div class="va-skills">${va.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}</div>${links?`<div class="va-links">${links}</div>`:''}<div class="va-meta"><div class="va-meta-item"><strong>${va.availability}</strong> Availability</div></div>${profileUrl(va)?`<a class="va-profile-link" href="${profileUrl(va)}">View full profile →</a>`:''}<button class="contact-btn" onclick="openModal('${va.name.replace(/'/g,"\\'")}')">Contact ${first} →</button></div>`;
   }).join('');
 });
 function shuffle(arr){let i=arr.length,j,t;while(i--){j=Math.floor(Math.random()*(i+1));t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
